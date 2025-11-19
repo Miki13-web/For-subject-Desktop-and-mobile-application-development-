@@ -70,4 +70,19 @@ public class Horse implements Comparable<Horse>{
         //age comparison, age is a primitive so Integer.compare
         return Integer.compare(age, o.age);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Horse horse = (Horse) o;
+        return age == horse.age &&
+                Objects.equals(name, horse.name) &&
+                Objects.equals(breed, horse.breed);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, breed, age);
+    }
 }
