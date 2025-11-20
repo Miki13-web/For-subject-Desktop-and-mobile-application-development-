@@ -11,7 +11,7 @@ public class Horse implements Comparable<Horse>{
     private double weight;
     private Gender gender;
 
-    Horse(String Name, String Breed, HorseType horseType, int Age,  Gender gender, String Color, double Weight, double price, HorseCondition Status ){
+    public Horse(String Name, String Breed, HorseType horseType, int Age,  Gender gender, String Color, double Weight, double price, HorseCondition Status ){
         this.name = Name;
         this.breed = Breed;
         this.HorseType = horseType;
@@ -84,5 +84,9 @@ public class Horse implements Comparable<Horse>{
     @Override
     public int hashCode() {
         return Objects.hash(name, breed, age);
+    }
+
+    public void print() {
+        System.out.println(this.toString());
     }
 }

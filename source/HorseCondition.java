@@ -5,5 +5,5 @@ public enum HorseCondition {
     sick,
     training,
     sold,
-    resting
+    recovering
 }
