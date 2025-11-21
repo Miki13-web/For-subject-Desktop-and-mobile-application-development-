@@ -29,15 +29,15 @@ public class Stable {
     public void setMaxCapacity(int MaxCapacity) {this.MaxCapacity = MaxCapacity;}
 
     //methods
-    public void addHorse(Horse horse) {
+    public void addHorse(Horse horse) throws StableException {
         if(horseList.size() >= MaxCapacity) {
-            System.err.println("Too many horses!");
-            return;
+           //throw exception
+            throw new StableException("Error: Stable: "+StableName+" is full!");
         }
 
         //check if horse is already at Stable
         if(horseList.contains(horse)) {
-            System.out.println("Horse" + horse.getName() + " is already in the Stable");
+            throw new StableException("Horse" + horse.getName() + " is already in the Stable");
         }
         else{
             horseList.add(horse);
@@ -45,37 +45,40 @@ public class Stable {
         }
     }
 
-    public void removeHorse(Horse horse) {
+    public void removeHorse(Horse horse) throws StableException {
         if(horseList.contains(horse)) {
             horseList.remove(horse);
             System.out.println("Horse " + horse.getName() + " has been removed from the Stable");
         }
+        else{
+            throw new StableException("there is no horse:" + horse.getName() + " in the stable: "+StableName+" CANNOT remove!");
+        }
     }
 
-    public void sickHorse(Horse horse) {
+    public void sickHorse(Horse horse) throws StableException {
         if(horseList.contains(horse)) {
             horse.setStatus(HorseCondition.sick);
             removeHorse(horse);
             System.out.println("Sick Horse " + horse.getName() + " has been removed from the Stable");
         }
     }
-    public void changeStatus(Horse horse, HorseCondition status) {
+    public void changeStatus(Horse horse, HorseCondition status) throws StableException {
         if(horseList.contains(horse)) {
             horse.setStatus(status);
             System.out.println("Horse " + horse.getName() + " has been changed to " + status);
         }
         else {
-            System.out.println("Horse " + horse.getName() + " is not in the Stable");
+            throw new StableException("Horse " + horse.getName() + " is not in the Stable");
         }
     }
 
-    public void changeWeight(Horse horse, float weight) {
+    public void changeWeight(Horse horse, float weight) throws StableException {
         if(horseList.contains(horse)) {
             horse.setWeight(weight);
             System.out.println("Horse " + horse.getName() + " WEIGHT has been changed to " + weight +" kg");
         }
         else {
-            System.out.println("Horse " + horse.getName() + " is not in the Stable");
+            throw new StableException("Horse " + horse.getName() + " is not in the Stable");
         }
     }
 

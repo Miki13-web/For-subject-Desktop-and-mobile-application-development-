@@ -1,6 +1,6 @@
 import source.*;
 
-void main() {
+void main() throws StableException {
     System.out.println("Stable Simulator Starting ...");
 
     //new object StableManager test
