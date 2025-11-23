@@ -64,4 +64,13 @@ public class StableManager {
             }
         }
     }
+
+
+    public List<Stable> getAll(){
+        List<Stable> all = new ArrayList<>();
+        for(Stable stable : stables.values()){
+            all.add(stable);
+        }
+        return all;
+    }
 }
