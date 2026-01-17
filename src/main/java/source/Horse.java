@@ -1,13 +1,16 @@
 package source;
 
+import com.fasterxml.jackson.annotation.JsonIgnore; // <--- DODAJ TEN IMPORT
 import jakarta.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "horses")
-public class Horse implements Comparable<Horse> {
+public class Horse implements Comparable<Horse>, Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,12 +36,11 @@ public class Horse implements Comparable<Horse> {
 
     @ManyToOne
     @JoinColumn(name = "stable_id")
+    @JsonIgnore  // <--- DODAJ TO TUTAJ (Przerywa pętlę Stadnina <-> Koń)
     private Stable stable;
 
-    @OneToMany(mappedBy = "horse", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "horse", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Rating> ratings = new ArrayList<>();
-
-    // --- KONSTRUKTORY ---
 
     public Horse() {}
 
@@ -54,60 +56,62 @@ public class Horse implements Comparable<Horse> {
         this.status = status;
     }
 
-    //gettery
-
+    // --- GETTERY I SETTERY ---
     public Long getId() { return id; }
-    public String getName() { return name; }
-    public String getBreed() { return breed; }
-    public HorseType getHorseType() { return horseType; }
-    public int getAge() { return age; }
-    public double getPrice() { return price; }
-    public String getColor() { return color; }
-    public double getWeight() { return weight; }
-    public Gender getGender() { return gender; }
-    public HorseCondition getStatus() { return status; }
-    public Stable getStable() { return stable; }
-    public List<Rating> getRatings() { return ratings; }
-
-    // settery
-
     public void setId(Long id) { this.id = id; }
+    public String getName() { return name; }
     public void setName(String name) { this.name = name; }
+    public String getBreed() { return breed; }
     public void setBreed(String breed) { this.breed = breed; }
+    public HorseType getHorseType() { return horseType; }
     public void setHorseType(HorseType horseType) { this.horseType = horseType; }
+    public int getAge() { return age; }
     public void setAge(int age) { this.age = age; }
+    public double getPrice() { return price; }
     public void setPrice(double price) { this.price = price; }
+    public String getColor() { return color; }
     public void setColor(String color) { this.color = color; }
+    public double getWeight() { return weight; }
     public void setWeight(double weight) { this.weight = weight; }
+    public Gender getGender() { return gender; }
     public void setGender(Gender gender) { this.gender = gender; }
+    public HorseCondition getStatus() { return status; }
     public void setStatus(HorseCondition status) { this.status = status; }
+    public Stable getStable() { return stable; }
     public void setStable(Stable stable) { this.stable = stable; }
+    public List<Rating> getRatings() { return ratings; }
     public void setRatings(List<Rating> ratings) { this.ratings = ratings; }
 
-    // methods
+    // --- METODY POMOCNICZE ---
 
-    public void printHorse(){
-        System.out.println(this.toString());
+    public double getAverageRating() {
+        if (ratings == null || ratings.isEmpty()) return 0.0;
+        double sum = 0;
+        for (Rating r : ratings) {
+            sum += r.getValue();
+        }
+        return sum / ratings.size();
     }
 
-    public void print() {
-        System.out.println(this.toString());
+    public int getRatingsCount() {
+        return ratings == null ? 0 : ratings.size();
     }
+
+    public void printHorse(){ System.out.println(this.toString()); }
+    public void print() { System.out.println(this.toString()); }
 
     @Override
     public String toString() {
         return String.format(
-                "Horse[ID: %d | Name: %-15s | Breed: %-15s | Type: %-13s | Age: %-2d | Color: %-10s | Weight: %,.1f kg | Gender: %-10s | Price: %,.2f | Status: %-12s]",
-                id, name, breed, horseType, age, color, weight, gender, price, status
+                "Horse[ID: %d | Name: %s | Breed: %s | AvgRating: %.1f]",
+                id, name, breed, getAverageRating()
         );
     }
 
     @Override
     public int compareTo(Horse o) {
         int nameCompare = name.compareTo(o.name);
-        if(nameCompare != 0) {
-            return nameCompare;
-        }
+        if(nameCompare != 0) return nameCompare;
         return Integer.compare(age, o.age);
     }
 
@@ -116,18 +120,10 @@ public class Horse implements Comparable<Horse> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Horse horse = (Horse) o;
-
-        if (id != null && horse.id != null) {
-            return Objects.equals(id, horse.id);
-        }
-
-        return age == horse.age &&
-                Objects.equals(name, horse.name) &&
-                Objects.equals(breed, horse.breed);
+        if (id != null && horse.id != null) return Objects.equals(id, horse.id);
+        return age == horse.age && Objects.equals(name, horse.name) && Objects.equals(breed, horse.breed);
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(name, breed, age);
-    }
+    public int hashCode() { return Objects.hash(name, breed, age); }
 }

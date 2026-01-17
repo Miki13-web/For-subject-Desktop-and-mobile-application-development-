@@ -3,9 +3,10 @@ package source.gui;
 import java.util.List;
 import source.Horse;
 
-public class HorseTableModel extends CustomTableModel<Horse>{
+public class HorseTableModel extends CustomTableModel<Horse> {
+
     public HorseTableModel(List<Horse> rows){
-        super(rows, new String[]{"Name", "Breed", "Age", "Status", "Price"});
+        super(rows, new String[]{"Name", "Breed", "Age", "Status", "Price", "Ratings", "Avg Rating"});
     }
 
     @Override
@@ -17,6 +18,8 @@ public class HorseTableModel extends CustomTableModel<Horse>{
             case 2: return horse.getAge();
             case 3: return horse.getStatus();
             case 4: return horse.getPrice();
+            case 5: return horse.getRatingsCount();
+            case 6: return String.format("%.2f", horse.getAverageRating());
             default: return null;
         }
     }

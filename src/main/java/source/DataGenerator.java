@@ -14,14 +14,14 @@ public class DataGenerator {
 
     public void generateSampleData(StableManager manager) {
         try {
-            System.out.println("Generating sample data...");
+            System.out.println("Generating original sample data...");
 
-            //creating stables
+            // 1. Tworzenie stadnin
             manager.addStable("Hubertus", 15);
             manager.addStable("Black Stallion", 8);
             manager.addStable("Blitz", 6);
 
-            //adding horses
+            // 2. Oryginalne konie dla "Hubertus"
             manager.addHorseToStable("Hubertus", new Horse("Roach", "Arabic", HorseType.HotBlood, 4, Gender.Stallion, "Brown", 480, 128000, HorseCondition.healthy));
             manager.addHorseToStable("Hubertus", new Horse("Kelpie", "Thoroughbred", HorseType.HotBlood, 5, Gender.Mare, "Black", 510, 145000, HorseCondition.healthy));
             manager.addHorseToStable("Hubertus", new Horse("Bucephalus", "Friesian", HorseType.ColdBlood, 8, Gender.Stallion, "Black", 650, 200000, HorseCondition.training));
@@ -31,7 +31,7 @@ public class DataGenerator {
             manager.addHorseToStable("Hubertus", new Horse("Tornado", "Mustang", HorseType.HotBlood, 3, Gender.Stallion, "Black", 490, 45000, HorseCondition.recovering));
             manager.addHorseToStable("Hubertus", new Horse("Luna", "Arab", HorseType.HotBlood, 2, Gender.Mare, "White", 410, 300000, HorseCondition.healthy));
 
-            // "Black Stallion"
+            // 3. Oryginalne konie dla "Black Stallion"
             manager.addHorseToStable("Black Stallion", new Horse("Shadowfax", "Andalusian", HorseType.HotBlood, 12, Gender.Stallion, "White", 550, 500000, HorseCondition.healthy));
             manager.addHorseToStable("Black Stallion", new Horse("Spirit", "Mustang", HorseType.HotBlood, 3, Gender.Stallion, "Buckskin", 450, 60000, HorseCondition.sick));
             manager.addHorseToStable("Black Stallion", new Horse("Black Beauty", "Thoroughbred", HorseType.HotBlood, 7, Gender.Stallion, "Black", 530, 250000, HorseCondition.training));
@@ -39,7 +39,7 @@ public class DataGenerator {
             manager.addHorseToStable("Black Stallion", new Horse("Pegasus", "Lipizzaner", HorseType.HotBlood, 10, Gender.Stallion, "White", 560, 80000, HorseCondition.recovering));
             manager.addHorseToStable("Black Stallion", new Horse("Dakota", "Quarter Horse", HorseType.ColdBlood, 6, Gender.Mare, "Dun", 500, 35000, HorseCondition.healthy));
 
-            // "Blitz"
+            // 4. Oryginalne konie dla "Blitz"
             manager.addHorseToStable("Blitz", new Horse("Bella", "Haflinger", HorseType.ColdBlood, 6, Gender.Mare, "Chestnut", 490, 45000, HorseCondition.recovering));
             manager.addHorseToStable("Blitz", new Horse("Titan", "Shire", HorseType.ColdBlood, 8, Gender.Stallion, "Bay", 950, 60000, HorseCondition.healthy));
             manager.addHorseToStable("Blitz", new Horse("Herkules", "Belgian", HorseType.ColdBlood, 10, Gender.Gelding, "Roan", 920, 55000, HorseCondition.training));

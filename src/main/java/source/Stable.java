@@ -1,15 +1,17 @@
 package source;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "stables")
-public class Stable {
+public class Stable implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,8 +23,10 @@ public class Stable {
     @Column(name = "max_capacity")
     private int maxCapacity;
 
-    // CascadeType.ALL if you save stable horse will get saved also
+    //  @JsonIgnore
+    // Dzięki temu /api/stable pokaże tylko stadniny, a nie liste koni
     @OneToMany(mappedBy = "stable", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JsonIgnore
     private List<Horse> horseList = new ArrayList<>();
 
     public Stable() {}
@@ -32,8 +36,9 @@ public class Stable {
         this.maxCapacity = maxCapacity;
     }
 
-    //get and set
+    // --- GETTERY I SETTERY ---
     public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
     public String getStableName() { return stableName; }
     public void setStableName(String stableName) { this.stableName = stableName; }
     public int getMaxCapacity() { return maxCapacity; }
@@ -55,8 +60,6 @@ public class Stable {
         if (horseList.contains(horse)) {
             throw new StableException("Horse " + horse.getName() + " is already in the Stable");
         }
-
-        // important for Hibernate: realtion
         horseList.add(horse);
         horse.setStable(this);
     }
@@ -73,7 +76,7 @@ public class Stable {
     public void sickHorse(Horse horse) throws StableException {
         if (horseList.contains(horse)) {
             horse.setStatus(HorseCondition.sick);
-            removeHorse(horse); //sick horse get deleted
+            removeHorse(horse);
         }
     }
 
