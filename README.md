@@ -1,6 +1,8 @@
 # For-subject-Desktop-and-mobile-application-development-
 
+<div align="center">
 <img width="424" height="233" alt="Zrzut ekranu 2026-03-12 132246" src="https://github.com/user-attachments/assets/2746e966-25ec-437f-9214-045dab85d787" />
+</div>
 <img width="1240" height="936" alt="Zrzut ekranu 2026-03-12 132320" src="https://github.com/user-attachments/assets/85cd0d13-14b4-4cba-8d54-3e5b0cbc69eb" />
 <img width="1239" height="949" alt="Zrzut ekranu 2026-03-12 132303" src="https://github.com/user-attachments/assets/ebc6dd38-5bb5-4159-a10a-1e88992ccf74" />
 
